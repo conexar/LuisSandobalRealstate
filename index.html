@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#071C33" />
+  <meta name="description" content="Tarjeta digital de Luis Sandobal, asesor inmobiliario." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Luis Sandobal" />
+
+  <title>Luis Sandobal | Asesor Inmobiliario</title>
+
+  <link rel="preconnect" href="https://i.postimg.cc/4xXwQRpM/Snap-Insta-to-703978969-18083059967139859-2156732333971670723-n-jpg.jpg" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#071C33',
+            navy2: '#0D2B4C',
+            copper: '#C9824B',
+            copper2: '#E1A06D',
+            pearl: '#F7F8FA'
+          },
+          boxShadow: {
+            premium: '0 24px 70px rgba(7, 28, 51, 0.22)',
+            soft: '0 12px 30px rgba(7, 28, 51, 0.12)'
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --navy: #071C33;
+      --navy-2: #0D2B4C;
+      --copper: #C9824B;
+      --copper-2: #E1A06D;
+      --white: #FFFFFF;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--navy);
+      background:
+        radial-gradient(circle at 12% 5%, rgba(225,160,109,.22), transparent 28%),
+        radial-gradient(circle at 92% 12%, rgba(13,43,76,.20), transparent 32%),
+        linear-gradient(145deg, #edf2f7 0%, #f9fafb 45%, #eef3f8 100%);
+      overflow-x: hidden;
+    }
+
+    .serif { font-family: 'Playfair Display', serif; }
+
+    .glass {
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .hero-pattern {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.04) 25%, transparent 25%) -12px 0/24px 24px,
+        linear-gradient(225deg, rgba(255,255,255,.035) 25%, transparent 25%) -12px 0/24px 24px,
+        linear-gradient(315deg, rgba(255,255,255,.04) 25%, transparent 25%) 0 0/24px 24px,
+        linear-gradient(45deg, rgba(255,255,255,.035) 25%, transparent 25%) 0 0/24px 24px,
+        linear-gradient(145deg, #071C33, #0D2B4C);
+    }
+
+    .copper-ring {
+      background: linear-gradient(135deg, #F6C49D, #C9824B 55%, #8E512B);
+      padding: 4px;
+    }
+
+    .action-btn, .icon-card, .save-btn {
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .action-btn:active, .icon-card:active, .save-btn:active { transform: scale(.97); }
+    @media (hover:hover) {
+      .action-btn:hover, .save-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(7,28,51,.18); }
+      .icon-card:hover { transform: translateY(-4px); box-shadow: 0 16px 35px rgba(7,28,51,.14); }
+    }
+
+    .modal-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-panel {
+      transform: translateY(28px) scale(.98);
+      opacity: 0;
+      transition: transform .28s cubic-bezier(.2,.8,.2,1), opacity .28s ease;
+    }
+    .modal-overlay.active .modal-panel { transform: translateY(0) scale(1); opacity: 1; }
+
+    .fade-up { animation: fadeUp .7s both; }
+    .delay-1 { animation-delay: .08s; }
+    .delay-2 { animation-delay: .16s; }
+    .delay-3 { animation-delay: .24s; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .safe-bottom { padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
+    .toast {
+      transform: translate(-50%, 18px);
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s ease;
+    }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body>
+  <main class="min-h-screen px-4 py-5 sm:py-10">
+    <section class="mx-auto w-full max-w-md overflow-hidden rounded-[32px] shadow-premium glass fade-up">
+      <div class="hero-pattern relative overflow-hidden px-6 pb-8 pt-8 text-white">
+        <div class="absolute -right-14 -top-14 h-40 w-40 rounded-full border border-white/10"></div>
+        <div class="absolute -left-20 bottom-6 h-48 w-48 rounded-full border border-copper/20"></div>
+
+        <button id="installTopBtn" class="absolute right-5 top-5 rounded-full border border-white/15 bg-white/10 p-2.5 backdrop-blur transition hover:bg-white/20" aria-label="Agregar a pantalla de inicio">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14a2 2 0 0 0 2-2v-3"/><path d="M3 16v3a2 2 0 0 0 2 2"/></svg>
+        </button>
+
+        <div class="relative flex flex-col items-center text-center">
+          <div class="copper-ring h-32 w-32 rounded-full shadow-2xl">
+            <img id="profilePhoto" src="" alt="Foto de Luis Sandobal" class="h-full w-full rounded-full bg-white object-cover" />
+          </div>
+          <p class="mt-5 text-xs font-semibold uppercase tracking-[.28em] text-copper2">Asesoría inmobiliaria</p>
+          <h1 class="serif mt-2 text-4xl font-bold leading-tight">Luis Sandobal</h1>
+          <p class="mt-1 text-sm font-medium text-white/78">Asesor Inmobiliario</p>
+          <p class="mx-auto mt-4 max-w-xs text-[15px] leading-6 text-white/85">“Encuentro el hogar que estás buscando.”</p>
+        </div>
+      </div>
+
+      <div class="px-5 pb-7 pt-6">
+        <div class="grid grid-cols-2 gap-3 fade-up delay-1">
+          <button id="scheduleBtn" class="action-btn flex items-center justify-center gap-2 rounded-2xl bg-copper px-4 py-3.5 font-bold text-white shadow-soft">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg>
+            Agendar visita
+          </button>
+          <button id="callBtn" class="action-btn flex items-center justify-center gap-2 rounded-2xl bg-navy px-4 py-3.5 font-bold text-white shadow-soft">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg>
+            Llamar
+          </button>
+        </div>
+
+        <div class="mt-6 grid grid-cols-3 gap-3 fade-up delay-2">
+          <button data-modal="servicesModal" class="icon-card rounded-2xl border border-slate-100 bg-white p-3.5 text-center shadow-sm">
+            <span class="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-navy/5 text-navy">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg>
+            </span>
+            <span class="mt-2 block text-xs font-bold">Servicios</span>
+          </button>
+
+          <button data-modal="hoursModal" class="icon-card rounded-2xl border border-slate-100 bg-white p-3.5 text-center shadow-sm">
+            <span class="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-copper/10 text-copper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            <span class="mt-2 block text-xs font-bold">Horario</span>
+          </button>
+
+          <button data-modal="qrModal" class="icon-card rounded-2xl border border-slate-100 bg-white p-3.5 text-center shadow-sm">
+            <span class="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-navy/5 text-navy">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>
+            </span>
+            <span class="mt-2 block text-xs font-bold">Código QR</span>
+          </button>
+
+          <button data-modal="locationModal" class="icon-card rounded-2xl border border-slate-100 bg-white p-3.5 text-center shadow-sm">
+            <span class="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-copper/10 text-copper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            </span>
+            <span class="mt-2 block text-xs font-bold">Ubicación</span>
+          </button>
+
+          <button data-modal="socialModal" class="icon-card rounded-2xl border border-slate-100 bg-white p-3.5 text-center shadow-sm">
+            <span class="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-navy/5 text-navy">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></svg>
+            </span>
+            <span class="mt-2 block text-xs font-bold">Redes</span>
+          </button>
+
+          <button data-modal="installModal" class="icon-card rounded-2xl border border-slate-100 bg-white p-3.5 text-center shadow-sm">
+            <span class="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-copper/10 text-copper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/><path d="M12 6v7"/><path d="m9 10 3 3 3-3"/></svg>
+            </span>
+            <span class="mt-2 block text-xs font-bold">Instalar</span>
+          </button>
+        </div>
+
+        <button id="saveContactBtn" class="save-btn mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-copper px-5 py-4 font-bold text-white shadow-soft fade-up delay-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+          Guardar Contacto
+        </button>
+
+        <p class="mt-5 text-center text-[11px] leading-5 text-slate-400">Tarjeta digital profesional · Comparte, conecta y guarda</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODALES -->
+  <div id="servicesModal" class="modal-overlay fixed inset-0 z-50 flex items-end justify-center bg-navy/70 p-4 backdrop-blur-sm sm:items-center">
+    <div class="modal-panel w-full max-w-md rounded-[28px] bg-white p-6 shadow-premium">
+      <div class="flex items-center justify-between">
+        <div><p class="text-xs font-bold uppercase tracking-[.22em] text-copper">Soluciones</p><h2 class="serif mt-1 text-2xl font-bold">Servicios inmobiliarios</h2></div>
+        <button class="close-modal rounded-full bg-slate-100 p-2" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="mt-5 grid grid-cols-2 gap-3">
+        <div class="rounded-2xl bg-slate-50 p-4"><strong>Venta</strong><p class="mt-1 text-sm text-slate-500">Acompañamiento integral para vender mejor.</p></div>
+        <div class="rounded-2xl bg-slate-50 p-4"><strong>Alquiler</strong><p class="mt-1 text-sm text-slate-500">Opciones ajustadas a tus necesidades.</p></div>
+        <div class="rounded-2xl bg-slate-50 p-4"><strong>Tasaciones</strong><p class="mt-1 text-sm text-slate-500">Valoración profesional de propiedades.</p></div>
+        <div class="rounded-2xl bg-slate-50 p-4"><strong>Inversiones</strong><p class="mt-1 text-sm text-slate-500">Oportunidades con visión estratégica.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hoursModal" class="modal-overlay fixed inset-0 z-50 flex items-end justify-center bg-navy/70 p-4 backdrop-blur-sm sm:items-center">
+    <div class="modal-panel w-full max-w-md rounded-[28px] bg-white p-6 shadow-premium">
+      <div class="flex items-center justify-between"><div><p class="text-xs font-bold uppercase tracking-[.22em] text-copper">Disponibilidad</p><h2 class="serif mt-1 text-2xl font-bold">Horario de atención</h2></div><button class="close-modal rounded-full bg-slate-100 p-2">✕</button></div>
+      <div class="mt-5 space-y-3">
+        <div class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-4"><span class="font-semibold">Lunes a viernes</span><span class="font-bold text-copper">9:00–19:00</span></div>
+        <div class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-4"><span class="font-semibold">Sábados</span><span class="font-bold text-copper">10:00–14:00</span></div>
+        <div class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-4"><span class="font-semibold">Domingos</span><span class="text-slate-400">Cerrado</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="qrModal" class="modal-overlay fixed inset-0 z-50 flex items-end justify-center bg-navy/70 p-4 backdrop-blur-sm sm:items-center">
+    <div class="modal-panel w-full max-w-md rounded-[28px] bg-white p-6 text-center shadow-premium">
+      <div class="flex items-center justify-between text-left"><div><p class="text-xs font-bold uppercase tracking-[.22em] text-copper">Contacto digital</p><h2 class="serif mt-1 text-2xl font-bold">Código QR vCard</h2></div><button class="close-modal rounded-full bg-slate-100 p-2">✕</button></div>
+      <div id="qrcode" class="mx-auto mt-6 flex w-fit items-center justify-center rounded-3xl border border-slate-100 bg-white p-4 shadow-soft"></div>
+      <p class="mt-4 text-sm leading-6 text-slate-500">Escanea el código para guardar los datos de Luis en tu teléfono.</p>
+    </div>
+  </div>
+
+  <div id="locationModal" class="modal-overlay fixed inset-0 z-50 flex items-end justify-center bg-navy/70 p-4 backdrop-blur-sm sm:items-center">
+    <div class="modal-panel w-full max-w-md rounded-[28px] bg-white p-6 shadow-premium">
+      <div class="flex items-center justify-between"><div><p class="text-xs font-bold uppercase tracking-[.22em] text-copper">Zona de atención</p><h2 class="serif mt-1 text-2xl font-bold">Ubicación</h2></div><button class="close-modal rounded-full bg-slate-100 p-2">✕</button></div>
+      <div class="mt-5 rounded-3xl bg-gradient-to-br from-navy to-navy2 p-6 text-white">
+        <p id="locationText" class="font-semibold">Montevideo, Uruguay</p>
+        <p class="mt-2 text-sm leading-6 text-white/70">Atención coordinada. Agenda una visita para recibir la ubicación exacta.</p>
+        <button id="mapsBtn" class="mt-5 w-full rounded-2xl bg-copper px-4 py-3 font-bold">Abrir en Google Maps</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="socialModal" class="modal-overlay fixed inset-0 z-50 flex items-end justify-center bg-navy/70 p-4 backdrop-blur-sm sm:items-center">
+    <div class="modal-panel w-full max-w-md rounded-[28px] bg-white p-6 shadow-premium">
+      <div class="flex items-center justify-between"><div><p class="text-xs font-bold uppercase tracking-[.22em] text-copper">Conecta</p><h2 class="serif mt-1 text-2xl font-bold">Redes sociales</h2></div><button class="close-modal rounded-full bg-slate-100 p-2">✕</button></div>
+      <div class="mt-5 space-y-3">
+        <a id="instagramLink" href="#" target="_blank" rel="noopener" class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-4 font-semibold"><span>Instagram</span><span>↗</span></a>
+        <a id="facebookLink" href="#" target="_blank" rel="noopener" class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-4 font-semibold"><span>Facebook</span><span>↗</span></a>
+        <a id="whatsappLink" href="#" target="_blank" rel="noopener" class="flex items-center justify-between rounded-2xl bg-[#ECFDF3] px-4 py-4 font-semibold text-[#138A4B]"><span>WhatsApp</span><span>↗</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="installModal" class="modal-overlay fixed inset-0 z-50 flex items-end justify-center bg-navy/70 p-4 backdrop-blur-sm sm:items-center">
+    <div class="modal-panel max-h-[88vh] w-full max-w-md overflow-y-auto rounded-[28px] bg-white p-6 shadow-premium scrollbar-hide">
+      <div class="flex items-center justify-between"><div><p class="text-xs font-bold uppercase tracking-[.22em] text-copper">Acceso rápido</p><h2 class="serif mt-1 text-2xl font-bold">Agregar a pantalla de inicio</h2></div><button class="close-modal rounded-full bg-slate-100 p-2">✕</button></div>
+      <button id="nativeInstallBtn" class="mt-5 hidden w-full rounded-2xl bg-copper px-4 py-3.5 font-bold text-white">Instalar ahora</button>
+      <div class="mt-5 space-y-4">
+        <div class="rounded-2xl bg-slate-50 p-4"><h3 class="font-bold">En iPhone o iPad</h3><ol class="mt-2 space-y-2 text-sm leading-6 text-slate-600"><li>1. Abre esta tarjeta en Safari.</li><li>2. Pulsa el botón <strong>Compartir</strong>.</li><li>3. Selecciona <strong>Agregar a inicio</strong>.</li><li>4. Confirma pulsando <strong>Agregar</strong>.</li></ol></div>
+        <div class="rounded-2xl bg-slate-50 p-4"><h3 class="font-bold">En Android</h3><ol class="mt-2 space-y-2 text-sm leading-6 text-slate-600"><li>1. Abre esta tarjeta en Chrome.</li><li>2. Pulsa el menú de tres puntos.</li><li>3. Selecciona <strong>Agregar a pantalla principal</strong> o <strong>Instalar aplicación</strong>.</li><li>4. Confirma la instalación.</li></ol></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast fixed bottom-6 left-1/2 z-[70] rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white shadow-premium">Acción completada</div>
+
+  <script>
+    // =====================================================
+    // DATOS EDITABLES DEL PROFESIONAL
+    // Reemplaza los valores de ejemplo antes de publicar.
+    // =====================================================
+    const profile = {
+      fullName: 'Luis Sandobal',
+      profession: 'Asesor Inmobiliario',
+      phone: '+59892927700',
+      email: '',
+      website: '',
+      photo: 'https://i.postimg.cc/4xXwQRpM/Snap-Insta-to-703978969-18083059967139859-2156732333971670723-n-jpg.jpg',
+      locationLabel: 'Montevideo, Uruguay',
+      mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Montevideo%2C%20Uruguay',
+      instagram: 'https://instagram.com/luissandobalrealstate',
+      facebook: '',
+      whatsappMessage: 'Hola Luis, me gustaría agendar una visita a una propiedad.'
+    };
+
+    const initialsAvatar = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0D2B4C"/><stop offset="1" stop-color="#071C33"/></linearGradient></defs>
+        <rect width="500" height="500" fill="url(#g)"/>
+        <circle cx="390" cy="80" r="150" fill="#C9824B" opacity=".18"/>
+        <circle cx="80" cy="430" r="170" fill="#ffffff" opacity=".05"/>
+        <text x="250" y="285" text-anchor="middle" fill="#ffffff" font-size="145" font-family="Arial, sans-serif" font-weight="700">LS</text>
+      </svg>`)}`;
+
+    const cleanPhone = profile.phone.replace(/[^\d+]/g, '');
+    const waPhone = profile.phone.replace(/\D/g, '');
+    const whatsappUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(profile.whatsappMessage)}`;
+
+    document.getElementById('profilePhoto').src = profile.photo || initialsAvatar;
+    document.getElementById('locationText').textContent = profile.locationLabel;
+    document.getElementById('instagramLink').href = profile.instagram;
+    const facebookLink = document.getElementById('facebookLink');
+    if (profile.facebook) facebookLink.href = profile.facebook;
+    else facebookLink.classList.add('hidden');
+    document.getElementById('whatsappLink').href = whatsappUrl;
+
+    document.getElementById('scheduleBtn').addEventListener('click', () => window.open(whatsappUrl, '_blank'));
+    document.getElementById('callBtn').addEventListener('click', () => window.location.href = `tel:${cleanPhone}`);
+    document.getElementById('mapsBtn').addEventListener('click', () => window.open(profile.mapsUrl, '_blank'));
+
+    const vCard = `BEGIN:VCARD\nVERSION:3.0\nFN:${profile.fullName}\nN:Sandobal;Luis;;;\nTITLE:${profile.profession}\nTEL;TYPE=CELL:${profile.phone}\nEMAIL:${profile.email}\nURL:${profile.website}\nADR;TYPE=WORK:;;${profile.locationLabel};;;;\nNOTE:Venta, alquiler, tasaciones e inversiones.\nEND:VCARD`;
+
+    let qrCreated = false;
+    function createQR() {
+      if (qrCreated) return;
+      const qrContainer = document.getElementById('qrcode');
+      qrContainer.innerHTML = '';
+      new QRCode(qrContainer, {
+        text: vCard,
+        width: 210,
+        height: 210,
+        colorDark: '#071C33',
+        colorLight: '#FFFFFF',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+      qrCreated = true;
+    }
+
+    function downloadVCard() {
+      const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Luis-Sandobal.vcf';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showToast('Contacto listo para guardar');
+    }
+    document.getElementById('saveContactBtn').addEventListener('click', downloadVCard);
+
+    const overlays = document.querySelectorAll('.modal-overlay');
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      if (id === 'qrModal') createQR();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('[data-modal]').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.modal)));
+    document.getElementById('installTopBtn').addEventListener('click', () => openModal('installModal'));
+    document.querySelectorAll('.close-modal').forEach(btn => btn.addEventListener('click', () => closeModal(btn.closest('.modal-overlay'))));
+    overlays.forEach(overlay => overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(overlay); }));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') overlays.forEach(closeModal); });
+
+    const toast = document.getElementById('toast');
+    let toastTimer;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+    }
+
+    // Instalación PWA: se mostrará el aviso nativo cuando el navegador lo permita.
+    let deferredPrompt = null;
+    const nativeInstallBtn = document.getElementById('nativeInstallBtn');
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      deferredPrompt = event;
+      nativeInstallBtn.classList.remove('hidden');
+    });
+    nativeInstallBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      nativeInstallBtn.classList.add('hidden');
+    });
+
+    // Manifest dinámico para mantener el proyecto en un solo archivo.
+    const manifest = {
+      name: 'Luis Sandobal | Asesor Inmobiliario',
+      short_name: 'Luis Sandobal',
+      start_url: '.',
+      display: 'standalone',
+      background_color: '#F7F8FA',
+      theme_color: '#071C33',
+      description: 'Tarjeta digital profesional de Luis Sandobal.'
+    };
+    const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+    const manifestLink = document.createElement('link');
+    manifestLink.rel = 'manifest';
+    manifestLink.href = URL.createObjectURL(manifestBlob);
+    document.head.appendChild(manifestLink);
+  </script>
+</body>
+</html>
