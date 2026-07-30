@@ -1,493 +1,443 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luis Sandobal | Asesor Inmobiliario</title>
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#0F172A">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Luis Sandobal">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        navy: {
-                            800: '#0f172a',
-                            900: '#0a0f1d',
-                            950: '#05070e',
-                        },
-                        copper: {
-                            400: '#e09f67',
-                            500: '#c87d55',
-                            600: '#b86b3f',
-                            700: '#96522c'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    }
-                }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Luis Sandobal - Asesor Inmobiliario</title>
+  
+  <!-- PWA Settings -->
+  <meta name="theme-color" content="#0F172A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Luis Sandobal">
+
+  <!-- FontAwesome & Google Fonts -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0F172A',
+              card: '#1E293B',
+              accent: '#B87333', /* Cobre */
+              accentLight: '#DA8A4B',
+              copperGlow: 'rgba(184, 115, 51, 0.25)',
+              light: '#F8FAFC'
             }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
         }
-    </script>
-    
-    <!-- QRCode.js library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+      }
+    }
+  </script>
 
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #05070e;
-            color: #f8fafc;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Glassmorphism Card Effect */
-        .glass-card {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(200, 125, 85, 0.2);
-        }
-
-        .glass-modal {
-            background: rgba(10, 15, 29, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(200, 125, 85, 0.3);
-        }
-
-        .copper-gradient-btn {
-            background: linear-gradient(135deg, #c87d55 0%, #b86b3f 100%);
-            box-shadow: 0 4px 15px rgba(200, 125, 85, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .copper-gradient-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(200, 125, 85, 0.45);
-        }
-
-        .copper-outline-btn {
-            border: 1.5px solid #c87d55;
-            color: #f8fafc;
-            transition: all 0.3s ease;
-        }
-
-        .copper-outline-btn:hover {
-            background: rgba(200, 125, 85, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .copper-text-gradient {
-            background: linear-gradient(135deg, #f3d0b3 0%, #c87d55 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .avatar-glow {
-            box-shadow: 0 0 25px rgba(200, 125, 85, 0.35);
-        }
-
-        /* Curved Header Mask */
-        .banner-curved {
-            clip-path: ellipse(115% 100% at 50% 0%);
-        }
-
-        /* Modal Animation */
-        .modal {
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease-in-out;
-            transform: scale(0.95);
-        }
-
-        .modal.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: scale(1);
-        }
-
-        .overlay {
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-    </style>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0B1120;
+      color: #F8FAFC;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .copper-gradient {
+      background: linear-gradient(135deg, #B87333 0%, #E5A059 50%, #B87333 100%);
+    }
+    .copper-text {
+      background: linear-gradient(135deg, #E5A059 0%, #B87333 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-modal {
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(184, 115, 51, 0.3);
+    }
+    .action-btn {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .action-btn:active {
+      transform: scale(0.96);
+    }
+    /* Modal Animation */
+    .modal {
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease-in-out;
+    }
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      transform: translateY(20px) scale(0.95);
+      transition: all 0.3s ease-in-out;
+    }
+    .modal.active .modal-content {
+      transform: translateY(0) scale(1);
+    }
+  </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950">
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-4 md:p-6">
 
-    <!-- Container Card -->
-    <div class="w-full max-w-md glass-card rounded-3xl p-6 sm:p-8 text-center shadow-2xl relative overflow-hidden">
+  <!-- Mobile Frame Container -->
+  <div class="w-full max-w-md bg-brand-navy min-h-screen sm:min-h-0 sm:rounded-3xl shadow-2xl overflow-hidden relative border border-slate-800/80 my-auto pb-10">
+    
+    <!-- Encabezado / Banner Image -->
+    <div class="h-44 w-full relative overflow-hidden">
+      <img src="https://i.postimg.cc/jdW7YDcs/Whats-App-Image-2026-07-28-at-13-23-21.jpg" alt="Portada Encabezado" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/30 to-transparent"></div>
+    </div>
+
+    <!-- Perfil & Info Principal -->
+    <div class="px-6 relative -mt-20 text-center flex flex-col items-center">
+      <!-- Foto de perfil circular con borde cobre -->
+      <div class="relative p-1 rounded-full copper-gradient shadow-xl shadow-brand-accent/20 mb-3">
+        <img src="https://i.postimg.cc/4xXwQRpM/Snap-Insta-to-703978969-18083059967139859-2156732333971670723-n-jpg.jpg" alt="Luis Sandobal" class="w-28 h-28 rounded-full object-cover border-2 border-brand-navy">
+      </div>
+
+      <h1 class="text-2xl font-bold tracking-tight text-white">Luis Sandobal</h1>
+      <p class="text-xs font-semibold uppercase tracking-widest copper-text mt-1">Asesor Inmobiliario</p>
+      
+      <p class="text-slate-300 text-sm mt-3 px-2 font-light italic leading-relaxed">
+        "Encuentro el hogar que estás buscando."
+      </p>
+    </div>
+
+    <!-- Botones de Acción Principales -->
+    <div class="px-6 mt-6 grid grid-cols-2 gap-3">
+      <a href="https://wa.me/59892927700?text=Hola%20Luis,%20me%20gustar%C3%ADa%20agendar%20una%20visita." target="_blank" class="action-btn flex items-center justify-center gap-2 py-3 px-4 rounded-xl copper-gradient text-slate-950 font-bold text-sm shadow-lg shadow-brand-accent/20">
+        <i class="fa-solid fa-calendar-check text-base"></i>
+        <span>Agendar Visita</span>
+      </a>
+      <a href="tel:+59892927700" class="action-btn flex items-center justify-center gap-2 py-3 px-4 rounded-xl glass-card border border-brand-accent/40 text-white font-semibold text-sm hover:bg-slate-800">
+        <i class="fa-solid fa-phone text-brand-accent"></i>
+        <span>Llamar</span>
+      </a>
+    </div>
+
+    <!-- Grilla de Íconos Interactivos (Modales) -->
+    <div class="px-6 mt-8">
+      <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 text-left">Accesos Rápidos</h2>
+      <div class="grid grid-cols-3 gap-3">
         
-        <!-- Top Decorative Background Accent -->
-        <div class="absolute -top-24 -left-24 w-48 h-48 bg-copper-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-copper-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <!-- Banner Header Image -->
-        <div class="mb-2 -mx-6 -mt-6 sm:-mx-8 sm:-mt-8 relative p-[3px] bg-gradient-to-b from-transparent via-copper-500/40 to-copper-500/60 banner-curved">
-            <div class="relative overflow-hidden banner-curved">
-                <img src="https://i.postimg.cc/jdW7YDcs/Whats-App-Image-2026-07-28-at-13-23-21.jpg" 
-                     alt="Header Banner" 
-                     class="w-full h-36 sm:h-40 object-cover object-center">
-                <div class="absolute inset-0 bg-gradient-to-t from-navy-900 via-transparent to-transparent opacity-80"></div>
-            </div>
-        </div>
-
-        <!-- PWA Install Banner Button -->
-        <div class="flex justify-between items-center mb-4">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-copper-500/10 text-copper-400 border border-copper-500/20">
-                <i class="fa-solid fa-gem text-[10px]"></i> Real Estate Pro
-            </span>
-            <button onclick="openModal('pwaModal')" class="text-xs text-slate-400 hover:text-copper-400 transition flex items-center gap-1.5 bg-slate-800/60 px-3 py-1.5 rounded-full border border-slate-700/50">
-                <i class="fa-solid fa-mobile-screen-button text-copper-400"></i> App
-            </button>
-        </div>
-
-        <!-- SECCIÓN 1: Perfil (Tamaño Original Restaurado) -->
-        <div class="relative inline-block mb-4 -mt-10 sm:-mt-12">
-            <div class="w-20 h-20 sm:w-26 sm:h-26 rounded-full p-1 bg-gradient-to-tr from-copper-500 via-amber-200 to-copper-600 avatar-glow mx-auto">
-                <img src="https://i.postimg.cc/4xXwQRpM/Snap-Insta-to-703978969-18083059967139859-2156732333971670723-n-jpg.jpg" 
-                     alt="Luis Sandobal" 
-                     class="w-full h-full object-cover rounded-full border-2 border-navy-900">
-            </div>
-            <div class="absolute bottom-0 right-0 bg-copper-500 text-white w-6 h-6 rounded-full flex items-center justify-center border-2 border-navy-900 text-[10px] shadow-md">
-                <i class="fa-solid fa-check"></i>
-            </div>
-        </div>
-
-        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-1">Luis Sandobal</h1>
-        <p class="text-copper-400 font-semibold text-sm sm:text-base tracking-wide uppercase mb-3">Asesor Inmobiliario</p>
-        
-        <p class="text-slate-300 text-sm font-light leading-relaxed mb-6 italic max-w-xs mx-auto">
-            "Encuentro el hogar que estás buscando."
-        </p>
-
-        <!-- SECCIÓN 2: Botones de Acción Principales -->
-        <div class="grid grid-cols-2 gap-3 mb-6">
-            <a href="https://wa.me/59892927700?text=Hola%20Luis,%20me%20gustar%C3%ADa%20agendar%20una%20visita." 
-               target="_blank" 
-               class="copper-gradient-btn py-3 px-4 rounded-xl text-white font-semibold text-sm flex items-center justify-center gap-2">
-                <i class="fa-regular fa-calendar-check text-base"></i>
-                <span>Agendar visita</span>
-            </a>
-            <a href="tel:+59892927700" 
-               class="copper-outline-btn py-3 px-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-2">
-                <i class="fa-solid fa-phone text-copper-400 text-sm"></i>
-                <span>Llamar</span>
-            </a>
-        </div>
-
-        <!-- SECCIÓN 3: Grilla de Íconos Interactivos -->
-        <div class="grid grid-cols-4 gap-3 mb-6">
-            <!-- Servicios -->
-            <button onclick="openModal('servicesModal')" class="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-800/40 border border-slate-700/50 hover:border-copper-500/50 hover:bg-slate-800/80 transition group">
-                <div class="w-10 h-10 rounded-xl bg-copper-500/10 flex items-center justify-center text-copper-400 mb-1.5 group-hover:scale-110 transition">
-                    <i class="fa-solid fa-briefcase text-lg"></i>
-                </div>
-                <span class="text-[11px] text-slate-300 font-medium">Servicios</span>
-            </button>
-
-            <!-- Horarios -->
-            <button onclick="openModal('hoursModal')" class="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-800/40 border border-slate-700/50 hover:border-copper-500/50 hover:bg-slate-800/80 transition group">
-                <div class="w-10 h-10 rounded-xl bg-copper-500/10 flex items-center justify-center text-copper-400 mb-1.5 group-hover:scale-110 transition">
-                    <i class="fa-regular fa-clock text-lg"></i>
-                </div>
-                <span class="text-[11px] text-slate-300 font-medium">Horario</span>
-            </button>
-
-            <!-- QR Code -->
-            <button onclick="openModal('qrModal')" class="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-800/40 border border-slate-700/50 hover:border-copper-500/50 hover:bg-slate-800/80 transition group">
-                <div class="w-10 h-10 rounded-xl bg-copper-500/10 flex items-center justify-center text-copper-400 mb-1.5 group-hover:scale-110 transition">
-                    <i class="fa-solid fa-qrcode text-lg"></i>
-                </div>
-                <span class="text-[11px] text-slate-300 font-medium">Código QR</span>
-            </button>
-
-            <!-- Redes & Ubicación -->
-            <button onclick="openModal('socialModal')" class="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-800/40 border border-slate-700/50 hover:border-copper-500/50 hover:bg-slate-800/80 transition group">
-                <div class="w-10 h-10 rounded-xl bg-copper-500/10 flex items-center justify-center text-copper-400 mb-1.5 group-hover:scale-110 transition">
-                    <i class="fa-solid fa-share-nodes text-lg"></i>
-                </div>
-                <span class="text-[11px] text-slate-300 font-medium">Contacto</span>
-            </button>
-        </div>
-
-        <!-- SECCIÓN 4: Botón Guardar Contacto (vCard) -->
-        <button onclick="downloadVCard()" class="w-full py-3.5 px-4 rounded-xl bg-slate-800/90 hover:bg-slate-800 border border-copper-500/30 text-white font-medium text-sm flex items-center justify-center gap-2.5 transition group shadow-lg">
-            <i class="fa-solid fa-user-plus text-copper-400 group-hover:scale-110 transition"></i>
-            <span>Guardar Contacto</span>
+        <!-- Botón Servicios -->
+        <button onclick="openModal('modal-servicios')" class="action-btn glass-card p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 text-center group hover:border-brand-accent/50">
+          <div class="w-10 h-10 rounded-xl bg-slate-800/80 flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-building-user text-lg"></i>
+          </div>
+          <span class="text-xs font-medium text-slate-200">Servicios</span>
         </button>
 
-        <!-- Footer signature -->
-        <div class="mt-6 pt-4 border-t border-slate-800/60 text-center">
-            <p class="text-[11px] text-slate-500">© 2026 Luis Sandobal · Asesoría Inmobiliaria Profesional</p>
-        </div>
+        <!-- Botón Horario -->
+        <button onclick="openModal('modal-horario')" class="action-btn glass-card p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 text-center group hover:border-brand-accent/50">
+          <div class="w-10 h-10 rounded-xl bg-slate-800/80 flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-clock text-lg"></i>
+          </div>
+          <span class="text-xs font-medium text-slate-200">Horario</span>
+        </button>
+
+        <!-- Botón Código QR -->
+        <button onclick="openModal('modal-qr')" class="action-btn glass-card p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 text-center group hover:border-brand-accent/50">
+          <div class="w-10 h-10 rounded-xl bg-slate-800/80 flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-qrcode text-lg"></i>
+          </div>
+          <span class="text-xs font-medium text-slate-200">Código QR</span>
+        </button>
+
+        <!-- Botón Ubicación -->
+        <button onclick="openModal('modal-ubicacion')" class="action-btn glass-card p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 text-center group hover:border-brand-accent/50">
+          <div class="w-10 h-10 rounded-xl bg-slate-800/80 flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-location-dot text-lg"></i>
+          </div>
+          <span class="text-xs font-medium text-slate-200">Ubicación</span>
+        </button>
+
+        <!-- Botón Redes Sociales -->
+        <button onclick="openModal('modal-redes')" class="action-btn glass-card p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 text-center group hover:border-brand-accent/50">
+          <div class="w-10 h-10 rounded-xl bg-slate-800/80 flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-share-nodes text-lg"></i>
+          </div>
+          <span class="text-xs font-medium text-slate-200">Redes</span>
+        </button>
+
+        <!-- Botón Agregar PWA -->
+        <button onclick="openModal('modal-pwa')" class="action-btn glass-card p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 text-center group hover:border-brand-accent/50">
+          <div class="w-10 h-10 rounded-xl bg-slate-800/80 flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-mobile-screen-button text-lg"></i>
+          </div>
+          <span class="text-xs font-medium text-slate-200">Instalar App</span>
+        </button>
+
+      </div>
     </div>
 
-    <!-- OVERLAY -->
-    <div id="overlay" onclick="closeAllModals()" class="overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-40"></div>
-
-    <!-- MODALES -->
-
-    <!-- Modal 1: Servicios -->
-    <div id="servicesModal" class="modal fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm glass-modal rounded-3xl p-6 text-slate-200">
-        <div class="flex justify-between items-center mb-5 pb-3 border-b border-slate-800">
-            <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                <i class="fa-solid fa-briefcase text-copper-400"></i> Servicios Profesionales
-            </h3>
-            <button onclick="closeModal('servicesModal')" class="text-slate-400 hover:text-white p-1">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-        </div>
-        <div class="space-y-3.5 text-left text-sm">
-            <div class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-900/50 border border-slate-800">
-                <div class="w-8 h-8 rounded-lg bg-copper-500/10 flex items-center justify-center text-copper-400 shrink-0 mt-0.5">
-                    <i class="fa-solid fa-house-circle-check"></i>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-white">Venta de Inmuebles</h4>
-                    <p class="text-xs text-slate-400">Comercialización estratégica y búsqueda de compradores calificados.</p>
-                </div>
-            </div>
-            <div class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-900/50 border border-slate-800">
-                <div class="w-8 h-8 rounded-lg bg-copper-500/10 flex items-center justify-center text-copper-400 shrink-0 mt-0.5">
-                    <i class="fa-solid fa-key"></i>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-white">Alquileres</h4>
-                    <p class="text-xs text-slate-400">Gestión integral de alquileres con máximas garantías.</p>
-                </div>
-            </div>
-            <div class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-900/50 border border-slate-800">
-                <div class="w-8 h-8 rounded-lg bg-copper-500/10 flex items-center justify-center text-copper-400 shrink-0 mt-0.5">
-                    <i class="fa-solid fa-calculator"></i>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-white">Tasaciones</h4>
-                    <p class="text-xs text-slate-400">Valoración precisa de mercado para su propiedad.</p>
-                </div>
-            </div>
-            <div class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-900/50 border border-slate-800">
-                <div class="w-8 h-8 rounded-lg bg-copper-500/10 flex items-center justify-center text-copper-400 shrink-0 mt-0.5">
-                    <i class="fa-solid fa-chart-line"></i>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-white">Inversiones Inmobiliarias</h4>
-                    <p class="text-xs text-slate-400">Asesoramiento personalizado en proyectos de alta rentabilidad.</p>
-                </div>
-            </div>
-        </div>
+    <!-- Botón Guardar Contacto (vCard) -->
+    <div class="px-6 mt-6">
+      <button onclick="downloadVCard()" class="action-btn w-full py-3.5 px-4 rounded-xl border border-brand-accent text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-brand-accent/10 transition-colors shadow-lg">
+        <i class="fa-solid fa-user-plus text-brand-accent"></i>
+        <span>Guardar Contacto</span>
+      </button>
     </div>
 
-    <!-- Modal 2: Horarios -->
-    <div id="hoursModal" class="modal fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm glass-modal rounded-3xl p-6 text-slate-200">
-        <div class="flex justify-between items-center mb-5 pb-3 border-b border-slate-800">
-            <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                <i class="fa-regular fa-clock text-copper-400"></i> Horario de Atención
-            </h3>
-            <button onclick="closeModal('hoursModal')" class="text-slate-400 hover:text-white p-1">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-        </div>
-        <div class="space-y-3 text-sm">
-            <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900/50 border border-slate-800">
-                <span class="font-medium text-slate-300">Lunes a Viernes</span>
-                <span class="text-copper-400 font-semibold bg-copper-500/10 px-2.5 py-1 rounded-md text-xs border border-copper-500/20">09:00 - 19:00</span>
-            </div>
-            <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900/50 border border-slate-800">
-                <span class="font-medium text-slate-300">Sábados</span>
-                <span class="text-copper-400 font-semibold bg-copper-500/10 px-2.5 py-1 rounded-md text-xs border border-copper-500/20">10:00 - 14:00</span>
-            </div>
-            <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900/50 border border-slate-800">
-                <span class="font-medium text-slate-400">Domingos</span>
-                <span class="text-slate-500 font-medium text-xs">Cerrado</span>
-            </div>
-        </div>
-        <div class="mt-5 p-3 rounded-xl bg-copper-500/10 border border-copper-500/20 text-xs text-copper-300 flex items-center gap-2">
-            <i class="fa-solid fa-circle-info text-copper-400 text-sm"></i>
-            <span>Atención fuera de horario disponible mediante cita previa.</span>
-        </div>
+    <!-- Footer Créditos -->
+    <div class="mt-8 text-center text-slate-500 text-xs">
+      <p>© 2026 Luis Sandobal · Tarjeta Digital</p>
     </div>
 
-    <!-- Modal 3: Código QR -->
-    <div id="qrModal" class="modal fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm glass-modal rounded-3xl p-6 text-slate-200 text-center">
-        <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-800">
-            <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                <i class="fa-solid fa-qrcode text-copper-400"></i> Mi Código QR
-            </h3>
-            <button onclick="closeModal('qrModal')" class="text-slate-400 hover:text-white p-1">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
+  </div>
+
+  <!-- MODALES -->
+
+  <!-- Modal Servicios -->
+  <div id="modal-servicios" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
+    <div class="modal-content glass-modal w-full max-w-sm rounded-2xl p-6 relative text-left">
+      <button onclick="closeModal('modal-servicios')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-brand-accent/20 flex items-center justify-center text-brand-accent">
+          <i class="fa-solid fa-building-user text-xl"></i>
         </div>
-        <p class="text-xs text-slate-400 mb-4">Escanea para abrir esta tarjeta digital en tu móvil</p>
-        
-        <div class="bg-white p-4 rounded-2xl inline-block shadow-inner mb-4">
-            <div id="qrcode"></div>
+        <h3 class="text-lg font-bold text-white">Servicios Profesionales</h3>
+      </div>
+      <div class="space-y-3">
+        <div class="p-3 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center gap-3">
+          <i class="fa-solid fa-key text-brand-accent"></i>
+          <div>
+            <h4 class="font-semibold text-sm text-slate-100">Venta</h4>
+            <p class="text-xs text-slate-400">Asesoramiento integral para la comercialización de propiedades.</p>
+          </div>
         </div>
-        
-        <p class="text-xs text-copper-400 font-medium">Luis Sandobal · Asesor Inmobiliario</p>
+        <div class="p-3 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center gap-3">
+          <i class="fa-solid fa-house-flag text-brand-accent"></i>
+          <div>
+            <h4 class="font-semibold text-sm text-slate-100">Alquiler</h4>
+            <p class="text-xs text-slate-400">Gestión ágil y segura de contratos e inquilinos.</p>
+          </div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center gap-3">
+          <i class="fa-solid fa-calculator text-brand-accent"></i>
+          <div>
+            <h4 class="font-semibold text-sm text-slate-100">Tasaciones</h4>
+            <p class="text-xs text-slate-400">Valoración precisa del mercado inmobiliario actual.</p>
+          </div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center gap-3">
+          <i class="fa-solid fa-chart-line text-brand-accent"></i>
+          <div>
+            <h4 class="font-semibold text-sm text-slate-100">Inversiones</h4>
+            <p class="text-xs text-slate-400">Oportunidades rentables de desarrollo y patrimonio.</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Modal 4: Redes & Ubicación -->
-    <div id="socialModal" class="modal fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm glass-modal rounded-3xl p-6 text-slate-200">
-        <div class="flex justify-between items-center mb-5 pb-3 border-b border-slate-800">
-            <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                <i class="fa-solid fa-share-nodes text-copper-400"></i> Redes y Contacto
-            </h3>
-            <button onclick="closeModal('socialModal')" class="text-slate-400 hover:text-white p-1">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
+  <!-- Modal Horario -->
+  <div id="modal-horario" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
+    <div class="modal-content glass-modal w-full max-w-sm rounded-2xl p-6 relative">
+      <button onclick="closeModal('modal-horario')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-brand-accent/20 flex items-center justify-center text-brand-accent">
+          <i class="fa-solid fa-clock text-xl"></i>
         </div>
-        <div class="space-y-3">
-            <a href="https://wa.me/59892927700" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 transition group">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </div>
-                    <div>
-                        <div class="text-sm font-semibold text-white">WhatsApp</div>
-                        <div class="text-xs text-slate-400">+598 92 927 700</div>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right text-slate-500 text-xs group-hover:translate-x-1 transition"></i>
-            </a>
-
-            <a href="https://instagram.com/luissandobalrealstate" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-pink-500/50 transition group">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center text-lg">
-                        <i class="fa-brands fa-instagram"></i>
-                    </div>
-                    <div>
-                        <div class="text-sm font-semibold text-white">Instagram</div>
-                        <div class="text-xs text-slate-400">@luissandobalrealstate</div>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right text-slate-500 text-xs group-hover:translate-x-1 transition"></i>
-            </a>
-
-            <a href="https://facebook.com" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 transition group">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg">
-                        <i class="fa-brands fa-facebook"></i>
-                    </div>
-                    <div>
-                        <div class="text-sm font-semibold text-white">Facebook</div>
-                        <div class="text-xs text-slate-400">Luis Sandobal Real Estate</div>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right text-slate-500 text-xs group-hover:translate-x-1 transition"></i>
-            </a>
+        <h3 class="text-lg font-bold text-white">Horario de Atención</h3>
+      </div>
+      <div class="space-y-3">
+        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-800/60 border border-slate-700/50">
+          <span class="text-sm font-medium text-slate-200">Lunes a Viernes</span>
+          <span class="text-sm font-semibold copper-text">09:00 - 19:00 hs</span>
         </div>
+        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-800/60 border border-slate-700/50">
+          <span class="text-sm font-medium text-slate-200">Sábados</span>
+          <span class="text-sm font-semibold copper-text">10:00 - 14:00 hs</span>
+        </div>
+        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-800/60 border border-slate-700/50 opacity-60">
+          <span class="text-sm font-medium text-slate-400">Domingos</span>
+          <span class="text-xs font-semibold text-slate-400">Cerrado</span>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Modal 5: Agregar a Pantalla de Inicio (PWA) -->
-    <div id="pwaModal" class="modal fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm glass-modal rounded-3xl p-6 text-slate-200">
-        <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-800">
-            <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                <i class="fa-solid fa-mobile-screen-button text-copper-400"></i> Instalar como App
-            </h3>
-            <button onclick="closeModal('pwaModal')" class="text-slate-400 hover:text-white p-1">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-        </div>
-        <p class="text-xs text-slate-300 mb-4">Añade esta tarjeta digital a tu pantalla de inicio para acceder rápidamente en cualquier momento.</p>
-        
-        <div class="space-y-3 mb-4">
-            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-left">
-                <div class="font-semibold text-xs text-copper-400 mb-1.5 flex items-center gap-1.5">
-                    <i class="fa-brands fa-apple text-sm"></i> Para iPhone (iOS):
-                </div>
-                <ol class="text-xs text-slate-300 space-y-1 list-decimal list-inside">
-                    <li>Abre esta página en <b>Safari</b>.</li>
-                    <li>Toca el botón <b>Compartir</b> <i class="fa-solid fa-arrow-up-from-bracket text-copper-400"></i>.</li>
-                    <li>Selecciona <b>"Agregar a inicio"</b> <i class="fa-regular fa-square-plus text-copper-400"></i>.</li>
-                </ol>
-            </div>
-
-            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-left">
-                <div class="font-semibold text-xs text-copper-400 mb-1.5 flex items-center gap-1.5">
-                    <i class="fa-brands fa-android text-sm"></i> Para Android:
-                </div>
-                <ol class="text-xs text-slate-300 space-y-1 list-decimal list-inside">
-                    <li>Abre el menú de opciones (tres puntos <i class="fa-solid fa-ellipsis-vertical text-copper-400"></i>).</li>
-                    <li>Toca en <b>"Instalar aplicación"</b> o <b>"Agregar a la pantalla principal"</b>.</li>
-                </ol>
-            </div>
-        </div>
-
-        <button onclick="closeModal('pwaModal')" class="w-full py-2.5 rounded-xl bg-copper-500 text-white font-medium text-xs">Entendido</button>
+  <!-- Modal QR -->
+  <div id="modal-qr" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
+    <div class="modal-content glass-modal w-full max-w-sm rounded-2xl p-6 relative text-center">
+      <button onclick="closeModal('modal-qr')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <h3 class="text-lg font-bold text-white mb-2">Código QR Contacto</h3>
+      <p class="text-xs text-slate-400 mb-4">Escanea para guardar el contacto directamente en tu dispositivo.</p>
+      
+      <div class="bg-white p-4 rounded-xl inline-block shadow-lg mx-auto">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3ASandobal%3BLuis%0AFN%3ALuis%20Sandobal%0ATITLE%3AAsesor%20Inmobiliario%0ATEL%3BTYPE%3DCELL%3A%2B59892927700%0AEND%3AVCARD" alt="Código QR Contacto" class="w-44 h-44">
+      </div>
     </div>
+  </div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        function openModal(modalId) {
-            document.getElementById('overlay').classList.add('active');
-            document.getElementById(modalId).classList.add('active');
+  <!-- Modal Ubicación -->
+  <div id="modal-ubicacion" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
+    <div class="modal-content glass-modal w-full max-w-sm rounded-2xl p-6 relative text-left">
+      <button onclick="closeModal('modal-ubicacion')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-brand-accent/20 flex items-center justify-center text-brand-accent">
+          <i class="fa-solid fa-location-dot text-xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white">Ubicación y Cobertura</h3>
+      </div>
+      <p class="text-sm text-slate-300 leading-relaxed mb-4">
+        Atención personalizada en oficina previa cita y cobertura completa en zonas residenciales y comerciales.
+      </p>
+      <a href="https://maps.google.com" target="_blank" class="action-btn w-full py-3 px-4 rounded-xl copper-gradient text-slate-950 font-bold text-sm flex items-center justify-center gap-2">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <span>Abrir en Google Maps</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Modal Redes Sociales -->
+  <div id="modal-redes" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
+    <div class="modal-content glass-modal w-full max-w-sm rounded-2xl p-6 relative">
+      <button onclick="closeModal('modal-redes')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-brand-accent/20 flex items-center justify-center text-brand-accent">
+          <i class="fa-solid fa-share-nodes text-xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white">Redes Sociales</h3>
+      </div>
+      <div class="space-y-3">
+        <a href="https://wa.me/59892927700" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/60 border border-slate-700/50 hover:border-emerald-500/50 transition-colors">
+          <i class="fa-brands fa-whatsapp text-2xl text-emerald-400"></i>
+          <div>
+            <p class="text-sm font-semibold text-slate-100">WhatsApp</p>
+            <p class="text-xs text-slate-400">+598 92 927 700</p>
+          </div>
+        </a>
+        <a href="https://instagram.com/luissandobalrealstate" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/60 border border-slate-700/50 hover:border-pink-500/50 transition-colors">
+          <i class="fa-brands fa-instagram text-2xl text-pink-400"></i>
+          <div>
+            <p class="text-sm font-semibold text-slate-100">Instagram</p>
+            <p class="text-xs text-slate-400">@luissandobalrealstate</p>
+          </div>
+        </a>
+        <a href="https://facebook.com" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/60 border border-slate-700/50 hover:border-blue-500/50 transition-colors">
+          <i class="fa-brands fa-facebook text-2xl text-blue-400"></i>
+          <div>
+            <p class="text-sm font-semibold text-slate-100">Facebook</p>
+            <p class="text-xs text-slate-400">Luis Sandobal Real Estate</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Agregar a Pantalla de Inicio (PWA) -->
+  <div id="modal-pwa" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
+    <div class="modal-content glass-modal w-full max-w-sm rounded-2xl p-6 relative text-left">
+      <button onclick="closeModal('modal-pwa')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-brand-accent/20 flex items-center justify-center text-brand-accent">
+          <i class="fa-solid fa-mobile-screen-button text-xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white">Instalar la App</h3>
+      </div>
+      <p class="text-xs text-slate-300 mb-4 leading-relaxed">
+        Agrega esta tarjeta a la pantalla principal de tu teléfono para acceder rápidamente en cualquier momento:
+      </p>
+      
+      <div class="space-y-4">
+        <!-- iOS Instructions -->
+        <div class="p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/60">
+          <div class="flex items-center gap-2 mb-1.5 font-semibold text-sm text-slate-100">
+            <i class="fa-brands fa-apple text-base"></i>
+            <span>En iPhone (Safari):</span>
+          </div>
+          <ol class="text-xs text-slate-300 space-y-1 list-decimal list-inside pl-1">
+            <li>Toca el botón <strong>Compartir</strong> <i class="fa-solid fa-arrow-up-from-bracket mx-0.5"></i> en la barra inferior.</li>
+            <li>Selecciona <strong>"Agregar a inicio"</strong> <i class="fa-regular fa-square-plus mx-0.5"></i>.</li>
+          </ol>
+        </div>
+
+        <!-- Android Instructions -->
+        <div class="p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/60">
+          <div class="flex items-center gap-2 mb-1.5 font-semibold text-sm text-slate-100">
+            <i class="fa-brands fa-android text-base text-emerald-400"></i>
+            <span>En Android (Chrome):</span>
+          </div>
+          <ol class="text-xs text-slate-300 space-y-1 list-decimal list-inside pl-1">
+            <li>Toca los <strong>tres puntos</strong> <i class="fa-solid fa-ellipsis-vertical mx-0.5"></i> en la esquina superior derecha.</li>
+            <li>Selecciona <strong>"Agregar a la pantalla principal"</strong> o <strong>"Instalar aplicación"</strong>.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // Cerrar modales al hacer clic fuera del contenido
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('active');
         }
+      });
+    });
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            document.getElementById('overlay').classList.remove('active');
-        }
-
-        function closeAllModals() {
-            const modals = document.querySelectorAll('.modal');
-            modals.forEach(m => m.classList.remove('active'));
-            document.getElementById('overlay').classList.remove('active');
-        }
-
-        function downloadVCard() {
-            const vCardData = `BEGIN:VCARD
+    // Función para descargar vCard
+    function downloadVCard() {
+      const vCardData = `BEGIN:VCARD
 VERSION:3.0
+N:Sandobal;Luis;;;
 FN:Luis Sandobal
 TITLE:Asesor Inmobiliario
 TEL;TYPE=CELL:+59892927700
+URL;TYPE=Instagram:https://instagram.com/luissandobalrealstate
 NOTE:Encuentro el hogar que estás buscando.
-X-SOCIALPROFILE;TYPE=instagram:https://instagram.com/luissandobalrealstate
 END:VCARD`;
 
-            const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.setAttribute('download', 'Luis_Sandobal_Asesor_Inmobiliario.vcf');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const qrContainer = document.getElementById('qrcode');
-            if (qrContainer) {
-                new QRCode(qrContainer, {
-                    text: window.location.href || "https://luis-sandobal-inmobiliaria.com",
-                    width: 140,
-                    height: 140,
-                    colorDark : "#0a0f1d",
-                    colorLight : "#ffffff",
-                    correctLevel : QRCode.CorrectLevel.H
-                });
-            }
-        });
-    </script>
+      const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8;' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Luis_Sandobal_Asesor_Inmobiliario.vcf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
 </body>
 </html>
